@@ -3,14 +3,14 @@ package com.goalpanzi.mission_mate.core.mission.mapper
 import com.goalpanzi.mission_mate.core.data.common.mapper.toModel
 import com.goalpanzi.mission_mate.core.domain.mission.model.BoardReward
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoard
-import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoardMembers
+import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoardMember
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoards
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionDetail
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionRank
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionVerification
 import com.goalpanzi.mission_mate.core.domain.mission.model.MissionVerifications
 import com.goalpanzi.mission_mate.core.network.model.response.BoardRewardResponse
-import com.goalpanzi.mission_mate.core.network.model.response.MissionBoardMembersResponse
+import com.goalpanzi.mission_mate.core.network.model.response.MissionBoardMemberResponse
 import com.goalpanzi.mission_mate.core.network.model.response.MissionBoardResponse
 import com.goalpanzi.mission_mate.core.network.model.response.MissionBoardsResponse
 import com.goalpanzi.mission_mate.core.network.model.response.MissionDetailResponse
@@ -41,8 +41,8 @@ fun MissionBoardResponse.toModel() : MissionBoard {
     )
 }
 
-fun MissionBoardMembersResponse.toModel() : MissionBoardMembers {
-    return MissionBoardMembers(
+fun MissionBoardMemberResponse.toModel() : MissionBoardMember {
+    return MissionBoardMember(
         memberId = memberId,
         nickname = nickname,
         characterType = characterType.toModel()

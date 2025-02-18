@@ -4,5 +4,5 @@ data class MissionBoard(
     val number : Int,
     val reward : BoardReward = BoardReward.NONE,
     val isMyPosition : Boolean = false,
-    val missionBoardMembers : List<MissionBoardMembers>
+    val missionBoardMembers : List<MissionBoardMember>
 )

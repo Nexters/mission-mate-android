@@ -1,5 +1,6 @@
 package com.goalpanzi.mission_mate.core.network.di
 
+import com.goalpanzi.mission_mate.core.network.service.HistoryService
 import com.goalpanzi.mission_mate.core.network.service.LoginService
 import com.goalpanzi.mission_mate.core.network.service.MissionService
 import com.goalpanzi.mission_mate.core.network.service.OnboardingService
@@ -54,5 +55,13 @@ object ServiceModule {
         @TokenReissueRetrofit retrofit: Retrofit
     ) : TokenService {
         return retrofit.create(TokenService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHistoryService(
+        @TokenRetrofit retrofit: Retrofit
+    ) : HistoryService {
+        return retrofit.create(HistoryService::class.java)
     }
 }

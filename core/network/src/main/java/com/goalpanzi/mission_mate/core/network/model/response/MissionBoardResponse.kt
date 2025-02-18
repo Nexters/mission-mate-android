@@ -7,5 +7,5 @@ data class MissionBoardResponse(
     val number : Int,
     val reward : BoardRewardResponse = BoardRewardResponse.NONE,
     val isMyPosition : Boolean = false,
-    val missionBoardMembers : List<MissionBoardMembersResponse>
+    val missionBoardMembers : List<MissionBoardMemberResponse>
 )

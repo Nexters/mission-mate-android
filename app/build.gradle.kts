@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":core:data:onboarding"))
     implementation(project(":core:data:setting"))
     implementation(project(":core:data:user"))
+    implementation(project(":core:data:history"))
     implementation(project(":core:push"))
     implementation(project(":core:notification"))
 }

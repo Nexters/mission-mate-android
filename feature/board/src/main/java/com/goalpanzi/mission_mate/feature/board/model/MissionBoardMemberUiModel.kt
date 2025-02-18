@@ -1,6 +1,6 @@
 package com.goalpanzi.mission_mate.feature.board.model
 
-import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoardMembers
+import com.goalpanzi.mission_mate.core.domain.mission.model.MissionBoardMember
 
 data class MissionBoardMemberUiModel(
     val nickname : String,
@@ -8,7 +8,7 @@ data class MissionBoardMemberUiModel(
  //   val memberId : Long
 )
 
-fun MissionBoardMembers.toModel() : MissionBoardMemberUiModel {
+fun MissionBoardMember.toModel() : MissionBoardMemberUiModel {
     return MissionBoardMemberUiModel(
         nickname = nickname,
         characterUiModel = characterType.toCharacterUiModel(),
