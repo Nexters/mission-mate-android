@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">내기록</string>
+    <string name="history_list_title_complete">완료 미션</string>
+    <string name="history_list_count">(%d)</string>
+    <string name="history_list_sort_latest_finished">최신 종료순</string>
+    <string name="history_list_item_board_count">%d/%d칸</string>
+    <string name="history_list_item_rank">최종%d등이에요</string>
+    <string name="history_list_item_period">%s~%s</string>
+    <string name="history_list_item_member_count">+%d</string>
+
+</resources>
