@@ -12,9 +12,15 @@ import javax.inject.Inject
 class HistoryRepositoryImpl @Inject constructor(
     private val historyService: HistoryService
 ) : HistoryRepository {
-    override suspend fun getMissionHistories(page: Int): DomainResult<MissionHistories> =
+    override suspend fun getMissionHistories(
+        page: Int,
+        pageSize: Int
+    ): DomainResult<MissionHistories> =
         handleResult {
-            historyService.getMyMissionHistories(page)
+            historyService.getMyMissionHistories(
+                page = page,
+                pageSize = pageSize
+            )
         }.convert {
             it.toModel()
         }

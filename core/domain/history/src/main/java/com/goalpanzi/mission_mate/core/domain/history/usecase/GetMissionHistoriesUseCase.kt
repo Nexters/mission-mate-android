@@ -10,8 +10,16 @@ import javax.inject.Inject
 class GetMissionHistoriesUseCase @Inject constructor(
     private val historyRepository: HistoryRepository
 ) {
-    operator fun invoke(page: Int) : Flow<DomainResult<MissionHistories>> = flow {
-        emit(historyRepository.getMissionHistories(page))
+    operator fun invoke(
+        page: Int,
+        pageSize: Int
+    ): Flow<DomainResult<MissionHistories>> = flow {
+        emit(
+            historyRepository.getMissionHistories(
+                page = page,
+                pageSize = pageSize
+            )
+        )
     }
 }
 

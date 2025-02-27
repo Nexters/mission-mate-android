@@ -20,6 +20,10 @@ fun NavController.navigateToHistory(
 
 fun NavGraphBuilder.historyNavGraph() {
     composable<HistoryRouteModel.History> {
-        HistoryRoute()
+        HistoryRoute(
+            onHistoryClick = { history ->
+
+            }
+        )
     }
 }
