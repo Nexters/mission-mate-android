@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -102,7 +103,7 @@ fun HistoryList(
                     missionId = history.missionId,
                     imageUrls = history.imageUrls,
                     characters = history.missionMembers.distinctCharacters,
-                    extraNumbers = history.missionMembers.extraNumbers,
+                    membersCount = history.missionMembers.size,
                     title = history.description,
                     startDate = history.missionFormattedStartDate,
                     endDate = history.missionFormattedEndDate,
@@ -132,7 +133,7 @@ fun HistoryListItem(
     missionId: Long,
     imageUrls: List<String>,
     characters: List<CharacterType>,
-    extraNumbers: Int,
+    membersCount: Int,
     title: String,
     startDate: String,
     endDate: String,
@@ -190,7 +191,7 @@ fun HistoryListItem(
 
         HistoryListItemInfo(
             characters = characters,
-            extraNumbers = extraNumbers,
+            membersCount = membersCount,
             title = title,
             startDate = startDate,
             endDate = endDate,
@@ -209,7 +210,8 @@ fun HistoryListItemImage(
 ) {
     HorizontalPager(
         state = state,
-        userScrollEnabled = false
+        userScrollEnabled = false,
+        beyondViewportPageCount = 2
     ) { index ->
         AsyncImage(
             modifier = modifier
@@ -235,7 +237,7 @@ fun HistoryListItemImageEmpty(
 @Composable
 fun HistoryListItemInfo(
     characters: List<CharacterType>,
-    extraNumbers: Int,
+    membersCount: Int,
     title: String,
     startDate: String,
     endDate: String,
@@ -245,8 +247,8 @@ fun HistoryListItemInfo(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        modifier = modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -254,27 +256,20 @@ fun HistoryListItemInfo(
             HistoryListItemInfoDetail(
                 modifier = Modifier.weight(1f),
                 characters = characters,
-                extraNumbers = extraNumbers,
+                membersCount = membersCount,
                 title = title,
-                startDate = startDate,
-                endDate = endDate
+                boardProgressed = boardProgressed,
+                boardTotal = boardTotal,
+                rank = rank
             )
-            if (rank == 1) {
-                StableImage(
-                    modifier = Modifier
-                        .width(85.dp)
-                        .height(80.dp)
-                        .align(
-                            Alignment.Bottom
-                        ),
-                    drawableResId = com.goalpanzi.mission_mate.core.designsystem.R.drawable.img_normal_trophy_gold
-                )
-            }
+            HistoryListItemInfoTrophy(
+                rank = rank,
+                boardProgressed = boardProgressed
+            )
         }
-        HistoryListItemInfoResult(
-            boardProgressed = boardProgressed,
-            boardTotal = boardTotal,
-            rank = rank
+        HistoryListItemInfoDetailPeriod(
+            startDate = startDate,
+            endDate = endDate
         )
     }
 
@@ -283,27 +278,29 @@ fun HistoryListItemInfo(
 @Composable
 fun HistoryListItemInfoDetail(
     characters: List<CharacterType>,
-    extraNumbers: Int,
+    membersCount: Int,
     title: String,
-    startDate: String,
-    endDate: String,
+    boardProgressed: Int,
+    boardTotal: Int,
+    rank: Int,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         HistoryListItemInfoDetailMembers(
-            modifier = Modifier.padding(bottom = 4.dp),
+            modifier = Modifier.padding(bottom = 2.dp),
             characters = characters,
-            extraNumbers = extraNumbers
+            membersCount = membersCount
         )
         HistoryListItemInfoDetailTitle(
             title = title
         )
-        HistoryListItemInfoDetailPeriod(
-            startDate = startDate,
-            endDate = endDate
+        HistoryListItemInfoResult(
+            boardProgressed = boardProgressed,
+            boardTotal = boardTotal,
+            rank = rank
         )
     }
 }
@@ -311,7 +308,7 @@ fun HistoryListItemInfoDetail(
 @Composable
 fun HistoryListItemInfoDetailMembers(
     characters: List<CharacterType>,
-    extraNumbers: Int,
+    membersCount : Int,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -322,16 +319,14 @@ fun HistoryListItemInfoDetailMembers(
         HistoryListItemInfoDetailMembersCharacterList(
             characters = characters
         )
-        if(extraNumbers > 0) {
-            Text(
-                text = stringResource(
-                    id = R.string.history_list_item_member_count,
-                    extraNumbers
-                ),
-                style = MissionMateTypography.body_xl_bold,
-                color = ColorGray1_FF404249
-            )
-        }
+        Text(
+            text = stringResource(
+                id = R.string.history_list_item_member_count,
+                membersCount
+            ),
+            style = MissionMateTypography.body_xl_bold,
+            color = ColorGray1_FF404249
+        )
     }
 }
 
@@ -396,7 +391,7 @@ fun HistoryListItemInfoDetailTitle(
     Text(
         modifier = modifier,
         text = title,
-        style = MissionMateTypography.title_xl_bold,
+        style = MissionMateTypography.title_lg_bold,
         color = ColorGray1_FF404249
     )
 }
@@ -454,7 +449,7 @@ fun HistoryListItemInfoResultBoard(
             progressed,
             total
         ),
-        style = MissionMateTypography.body_xl_bold,
+        style = MissionMateTypography.body_lg_bold,
         color = ColorOrange_FFFF5732
     )
 }
@@ -470,8 +465,33 @@ fun HistoryListItemInfoResultRank(
             id = R.string.history_list_item_rank,
             rank
         ),
-        style = MissionMateTypography.body_xl_regular,
+        style = MissionMateTypography.body_lg_regular,
         color = ColorGray1_FF404249
+    )
+}
+
+@Composable
+fun RowScope.HistoryListItemInfoTrophy(
+    rank: Int,
+    boardProgressed: Int,
+    modifier: Modifier = Modifier
+) {
+    val trophyDrawableResId = if(boardProgressed == 0) {
+        com.goalpanzi.mission_mate.core.designsystem.R.drawable.img_normal_trophy_question_mark
+    }else {
+        when(rank) {
+            1 -> com.goalpanzi.mission_mate.core.designsystem.R.drawable.img_normal_trophy_gold
+            2 -> com.goalpanzi.mission_mate.core.designsystem.R.drawable.img_normal_trophy_silver
+            3 -> com.goalpanzi.mission_mate.core.designsystem.R.drawable.img_normal_trophy_bronze
+            else -> return
+        }
+    }
+    StableImage(
+        modifier = modifier
+            .width(63.dp)
+            .height(59.dp)
+            .align(Alignment.Bottom),
+        drawableResId = trophyDrawableResId
     )
 }
 
@@ -507,7 +527,7 @@ private fun HistoryListItemPreview() {
                 CharacterType.DOG,
                 CharacterType.BIRD
             ),
-            extraNumbers = 3,
+            membersCount = 3,
             title = "매일 저녁 1시간 먹기",
             startDate = "2024.08.15",
             endDate = "2024.09.14",

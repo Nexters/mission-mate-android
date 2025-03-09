@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,7 +46,17 @@ class HistoryViewModel @Inject constructor(
         getMissionHistoriesUseCase(
             page = page,
             pageSize = HISTORIES_PAGE_SIZE
-        ).collect { result ->
+        ).onStart {
+            val state = historyState.value
+
+            if(page != 0 && state is HistoryUiState.Success){
+                _historyState.emit(
+                    state.copy(isPaging = true)
+                )
+            }else {
+                _historyState.emit(HistoryUiState.Loading)
+            }
+        }.collect { result ->
             val uiState = when (result) {
                 is DomainResult.Success -> {
                     val data = result.data.toUiModel()

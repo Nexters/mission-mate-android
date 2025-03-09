@@ -7,6 +7,6 @@
     <string name="history_list_item_board_count">%d/%d칸</string>
     <string name="history_list_item_rank">최종%d등이에요</string>
     <string name="history_list_item_period">%s~%s</string>
-    <string name="history_list_item_member_count">+%d</string>
+    <string name="history_list_item_member_count">%d명</string>
 
 </resources>

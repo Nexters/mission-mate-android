@@ -111,7 +111,7 @@ internal fun MainNavHost(
             )
             boardFinishNavGraph(
                 onClickOk = {
-                    navigator.navigationToMainTab()
+                    navigator.navigationToMainTab(MainTabDataModel.History)
                 }
             )
             userStoryNavGraph(

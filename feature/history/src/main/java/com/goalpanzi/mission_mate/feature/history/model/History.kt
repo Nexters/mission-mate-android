@@ -45,13 +45,7 @@ data class History(
 
 class MissionHistoryMembers(
     private val members: List<CharacterType>
-) {
-    val extraNumbers = if(members.size > VISIBLE_MEMBERS_NUMBER){
-        members.size - VISIBLE_MEMBERS_NUMBER
-    } else {
-        0
-    }
-
+): List<CharacterType> by members {
     val distinctCharacters: List<CharacterType> by lazy {
         members.distinct().take(VISIBLE_MEMBERS_NUMBER)
     }

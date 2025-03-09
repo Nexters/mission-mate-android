@@ -22,6 +22,7 @@ fun MissionHistoryResponse.toModel(): MissionHistory = MissionHistory(
 )
 
 fun MissionHistoriesResponse.toModel(): MissionHistories = MissionHistories(
+    totalCount = totalCount ?: 0,
     hasNext = hasNext,
     resultList = resultList.map {
         it.toModel()
